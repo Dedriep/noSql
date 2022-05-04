@@ -1,21 +1,28 @@
-const {schema,model} = require('mongoose')
+const {Schema,model} = require('mongoose')
 
 const UserSchema = new Schema (
     {
         username: {
-            type: string,
+            type: String,
             required: true,
             trim: true,
             unique: true
         },
 
         email: {
-            type: string,
+            type: String,
             required: true,
             trim: true,
             unique: true
 
         },
+
+        thoughts: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Thoughts'
+        }],
+
+        friends: [this]
     },
     {
         toJSON: {
