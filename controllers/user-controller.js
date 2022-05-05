@@ -39,10 +39,8 @@ const userController = {
     createUser({body}, res){
         User.create(body)
         .then(data => res.json(data))
-        .catch(error => {
-            console.log(error)
-            res.sendStatus(400)
-        })
+        .catch(error => res.json(error));
+
     },
 //update a user
     updateUser({body, params}, res){

@@ -29,6 +29,4 @@ const ReactionsSchema = new Schema ({
 
 )
 
-const Reactions = model ('Reactions', ReactionsSchema)
-
-module.exports= Reactions
+module.exports= ReactionsSchema
