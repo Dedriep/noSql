@@ -56,9 +56,16 @@ const userController = {
         .catch(error => {
             console.log(error)
         })
-    }
+    },
 
-    
+    //delete a user
+    deleteUser( {params}, res){
+        User.findOneAndDelete({_id:params.id})
+        .catch(error => {
+            console.log(error)
+            res.sendStatus(400)
+        })
+    }
 }
 
 
