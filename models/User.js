@@ -1,3 +1,4 @@
+const { TopologyDescriptionChangedEvent } = require('mongodb')
 const {Schema,model} = require('mongoose')
 
 const UserSchema = new Schema (
@@ -32,6 +33,9 @@ const UserSchema = new Schema (
     }
 )
 
+UserSchema.virtual('friendcount').get(function(){
+    return this.friends.length
+})
 
 const User = model('User', UserSchema)
 

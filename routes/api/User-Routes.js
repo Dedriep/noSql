@@ -1,13 +1,15 @@
-const router = require('express').Router
+const router = require('express').Router()
 const{
     getUsersById,
-    getAllUsers
+    getAllUsers,
+    createUser
 
 } = require('../../controllers/user-controller')
 
 router
     .route('/')
     .get(getAllUsers)
+    .post(createUser)
     
 
 router

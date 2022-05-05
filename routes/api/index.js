@@ -1,4 +1,4 @@
-const router = require('express').Router
+const router = require('express').Router()
 const userRoute = require('./User-Routes')
 
 router.use('/api/user', userRoute)

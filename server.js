@@ -7,9 +7,9 @@ const PORT = process.env.PORT || 3001
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-
+//  'mongodb://localhost:3001'
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:3001', {
-   // useFindAndModify: false,
+    //useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
