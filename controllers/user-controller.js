@@ -67,33 +67,76 @@ const userController = {
 
 
     /// add a friend
-    addFriend( {params}, res){
-        User.findOneAndUpdate(
-        {_id: params.userId},
-        {$push: {friends: _id}},
-        {new:true},
 
+ 
+    addFriend({ params }, res) {
+        User.findOneAndUpdate(
+            { _id: params.userId },
+            { $addToSet: { friends: params.friendId } },
+            { new: true }
         )
-        .then(data => {
-            if (!data){
-                res.status(404).json({message:' no user found'})
-                return
-            }res.json(data)
-        } )
-        .catch(error => {
-            console.log(error)
-        })
+            .then(data => {
+                if (!data) {
+                    res.status(404).json({ message: 'No friend with this id!' });
+                    return;
+                }
+
+                User.findOneAndUpdate(
+                    { _id: params.friendId },
+                    { $addToSet: { friends: params.userId } },
+                    { new: true }
+                )
+
+                    .then(data => {
+                        if (!data) {
+                            res.status(404).json({ message: 'No friend with this id!' });
+                        }
+                        res.json(data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json(err);
+
+                    })
+            }
+            )
+
+
     },
+
 
 
     //delete friend
     deleteFriend({params}, res){
-        User.findOneAndDelete({_id: params.id})
-        .then(data=>{res.json(data)})
-        .catch(error => {
-            console.log(error)
-            res.sendStatus(400)
-        })
+        User.findOneAndDelete(
+            {_id: params.friendId}, 
+            { $pullAll: { friends: params.userId } },
+            { new: true } )
+            .then(data => {
+                if (!data) {
+                    res.status(404).json({ message: 'No friend with this id!' });
+                    return;
+                }
+
+                User.findOneAndDelete(
+                    { _id: params.userId },
+                    { $pullAll: { friends: params.friendId } },
+                    { new: true }
+                )
+
+                    .then(data => {
+                        if (!data) {
+                            res.status(404).json({ message: 'No friend with this id!' });
+                        }
+                        res.json(data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json(err);
+
+                    })
+            }
+            )
     },
     
 }

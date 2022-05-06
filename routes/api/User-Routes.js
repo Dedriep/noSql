@@ -4,7 +4,7 @@ const{
     getAllUsers, //get all // works
     createUser, //create user // workd
     deleteUser, // delete user // works
-    addFriend, // add a friend ??
+    addFriend, // add a friend works
     updateUser, // works
     deleteFriend //?????
 
@@ -15,9 +15,9 @@ router
     .get(getAllUsers)
     .post(createUser)
 
-router.route('/user/:userId/friends/:friendId').post(addFriend)
+router.route('/:userId/friends/:friendId').post(addFriend)
 
-router.route('/:userId/friends:/Id').delete(deleteFriend)
+router.route('/:userId/friends/:friendId').delete(deleteFriend)
 router
     .route('/:id')
     .get(getUsersById)
