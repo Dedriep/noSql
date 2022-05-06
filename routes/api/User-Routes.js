@@ -15,7 +15,7 @@ router
     .get(getAllUsers)
     .post(createUser)
 
-router.route('/:userId/friendId').post(addFriend)
+router.route('/user/:userId/friends/:friendId').post(addFriend)
 
 router.route('/:userId/friends:/Id').delete(deleteFriend)
 router
