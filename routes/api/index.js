@@ -6,9 +6,6 @@ router.use('/api/user', userRoute)
 router.use('/api/thoughts', thoughtsRoute)
 
 
-// router.use(req,res) => {
-//     res.status(404).send('')
-// }
 
 router.use((req, res) => {
     res.status(404).send('<p> 404 Error!</p>');

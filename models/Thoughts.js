@@ -1,5 +1,39 @@
 const {Schema, model, Types, default: mongoose} = require('mongoose')
 
+
+const ReactionsSchema = new Schema (
+    
+    {
+
+    reactionsId: {
+
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId()
+    },
+
+    reactionBody: {
+        type: String,
+        required: true,
+        maxlength: 280
+    },
+    username:{
+        type: String,
+        required: true,
+    },
+    createdAt: {
+        type: Date
+    }
+},
+
+{
+    toJSON: {
+        virtuals: true
+    },
+    id: false
+})
+
+
+
 const ThoughtsSchema = new Schema (
     {
         thoughtText:{
@@ -14,16 +48,11 @@ const ThoughtsSchema = new Schema (
         },
 
         username: {
-            type: Schema.Types.ObjectId, 
-            ref: 'User',
-            required: false, //change to true
+            type: String,
+            required: true,
         },
 
-        reactions: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Rections'
-            
-        }]
+        reactions: [ReactionsSchema]
     },
 
     {
@@ -33,6 +62,7 @@ const ThoughtsSchema = new Schema (
         id: false
     }
 )
+
 
 const Thoughts = model('Thoughts', ThoughtsSchema)
 

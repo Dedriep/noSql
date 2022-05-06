@@ -1,13 +1,16 @@
-const {User, Reactions, Thoughts} = require('../models')
+const {User, Thoughts} = require('../models')
 
 const thoughtsController = {
 
-    createThought({params, body}, res){
-        console.log(params)
+
+    //create a thought
+    createThought({body}, res){
+        console.log("inside create thought", body)
         Thoughts.create(body)
         .then(({_id}) =>{
+            console.log("id",_id)
             return User.findOneAndUpdate(
-                {_id: params.userId},
+                {_id: body.userId},
                 {$push: {thoughts: _id}},
                 {new:true}
             )
@@ -41,7 +44,7 @@ const thoughtsController = {
 
     ///find thought by id
 
-    findOneThought(req, res){
+    findOneThought({params}, res){
         Thoughts.findOne({_id:params.id})
         .populate({
             path: 'reactions',
@@ -63,6 +66,43 @@ const thoughtsController = {
             } res.json(data)
         })
         .catch(error=>res.json(error))
+    },
+
+    // delete thought
+    deleteThought({params},res){
+        Thoughts.findOneAndDelete({_id: params.id}) 
+        .catch(error => {
+            console.log(error)
+            res.sendStatus(400)
+        })
+    },
+
+
+    //reaction to a thought
+
+    addReaction({params, body}, res){
+        Thoughts.findByIdAndUpdate(
+            {_id: params.ThoughtsId},
+            {$push: {reactions:body}},
+            {new:true}
+        )
+        .then(data =>{
+            if (!data){
+                res.status(404).json({message:'no thoguht found'})
+            } res.json(data)
+        })
+        .catch(error=>res.json(error))
+    },
+
+    // delete reaction
+
+    deleteReaction({params}, res){
+        Thoughts.findOneAndUpdate({_id: params.id},
+        {$pull: {reactions: params.reactionsId }},
+        {new:true}
+        )
+        .then(data=>{res.json(data) })
+        .catch(error=> res.json(error))
     }
 }
 
