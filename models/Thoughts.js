@@ -16,12 +16,12 @@ const ThoughtsSchema = new Schema (
         username: {
             type: Schema.Types.ObjectId, 
             ref: 'User',
-            required: true,
+            required: false, //change to true
         },
 
         reactions: [{
             type: Schema.Types.ObjectId,
-            ref: 'rections'
+            ref: 'Rections'
             
         }]
     },
