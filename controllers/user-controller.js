@@ -3,7 +3,7 @@ const {User, Thoughts} = require('../models')
 const userController = {
 
     //get all users
-    getAllUsers(req,res){
+    getAllUsers({req},res){
         User.find({})
         .populate({
             path: 'thoughts',
@@ -21,7 +21,6 @@ const userController = {
     //get user by id
     getUsersById({params},res){
         User.findOne({_id: params.id})
-        User.find({})
         .populate({
             path: 'thoughts',
             select: ('-__v')
@@ -36,8 +35,8 @@ const userController = {
     },
 
     // create a user post route
-    createUser(body, res){
-        User.create({body})
+    createUser({body}, res){
+        User.create(body)
         .then(data => res.json(data))
         .catch(error => res.json(error));
 
