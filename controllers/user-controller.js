@@ -37,7 +37,7 @@ const userController = {
     },
 
     // create a user post route
-    createUser({body}, res){
+    createUser(body, res){
         User.create({body})
         .then(data => res.json(data))
         .catch(error => res.json(error));
