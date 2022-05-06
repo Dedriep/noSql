@@ -108,35 +108,17 @@ const userController = {
 
     //delete friend
     deleteFriend({params}, res){
-        User.findOneAndDelete(
+        User.findOneAndUpdate(
             {_id: params.friendId}, 
-            { $pullAll: { friends: params.userId } },
+            { $pull: { friends: params.userId } },
             { new: true } )
             .then(data => {
                 if (!data) {
                     res.status(404).json({ message: 'No friend with this id!' });
                     return;
-                }
-
-                User.findOneAndDelete(
-                    { _id: params.userId },
-                    { $pullAll: { friends: params.friendId } },
-                    { new: true }
-                )
-
-                    .then(data => {
-                        if (!data) {
-                            res.status(404).json({ message: 'No friend with this id!' });
-                        }
-                        res.json(data);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        res.status(500).json(err);
-
-                    })
-            }
-            )
+                } res.json(data)})
+                 
+            
     },
     
 }

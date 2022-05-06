@@ -4,11 +4,11 @@ const thoughtsController = {
 
 
     //create a thought
-    createThought({body}, res){
+    createThought({body,}, res){
         console.log("inside create thought", body)
         Thoughts.create(body)
         .then(({_id}) =>{
-            console.log("id",_id)
+            console.log("THIS IS THE id",_id)
             return User.findOneAndUpdate(
                 {_id: body.userId},
                 {$push: {thoughts: _id}},
@@ -20,7 +20,7 @@ const thoughtsController = {
                 res.status(404).json({message:' no user found'})
                 return
             }res.json(data)
-        } )
+        })
         .catch(error => {
             console.log(error)
         })
@@ -81,11 +81,15 @@ const thoughtsController = {
     //reaction to a thought
 
     addReaction({params, body}, res){
-        Thoughts.findByIdAndUpdate(
-            {_id: params.ThoughtsId},
-            {$push: {reactions:body}},
-            {new:true}
-        )
+        Reactions.Create(body)
+        .then(({_id}) =>{
+            return  Thoughts.findOneAndUpdate(
+                {_id: params.thoughtsId},
+                {$push: {reactions:_id}},
+                {new:true}
+            )
+        })
+       
         .then(data =>{
             if (!data){
                 res.status(404).json({message:'no thoguht found'})

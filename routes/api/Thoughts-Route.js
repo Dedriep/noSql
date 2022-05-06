@@ -18,7 +18,7 @@ router
 
 
 //???
-router.route('/:userId/thoughtsId').post(addReaction)
+router.route('/:thoughtsId/reactions').post(addReaction)
 
 router
     .route('/:id')
