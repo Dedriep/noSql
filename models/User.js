@@ -6,14 +6,14 @@ const userSchema = new Schema (
             type: String,
             required: true,
             trim: true,
-            unique: true
+           unique: true
         },
 
         email: {
             type: String,
             required: true,
             trim: true,
-            unique: true
+           unique: true
 
         },
 
@@ -25,7 +25,7 @@ const userSchema = new Schema (
         friends: [
             {
               type: Schema.Types.ObjectId,
-              ref: User
+              ref: 'User'
             }]
     },
     {
